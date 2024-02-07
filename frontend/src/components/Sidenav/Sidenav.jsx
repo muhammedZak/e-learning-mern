@@ -14,13 +14,23 @@ const items = [
   { id: 7, icon: true, text: 'Lifestyle' },
 ];
 
-const Sidenav = ({ open, nestedSidebarOpen, nestedSidebarHandle }) => {
+const Sidenav = ({
+  open,
+  nestedSidebarOpen,
+  nestedSidebarHandle,
+  nestedSidebarClose,
+  onClose,
+}) => {
   return (
     <>
-      <ChildSidenav open={nestedSidebarOpen} />
+      <ChildSidenav
+        open={nestedSidebarOpen}
+        onClose={onClose}
+        nestedClose={nestedSidebarClose}
+      />
 
       <div
-        className={`${
+        className={`transition-spacing duration-300 ease-in-out ${
           open ? 'w-72' : 'w-0'
         } h-full fixed z-10 top-0 left-0 bg-slate-100  overflow-x-hidden overflow-y-scroll`}
       >

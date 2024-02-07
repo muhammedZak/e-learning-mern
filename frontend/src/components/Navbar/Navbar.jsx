@@ -47,6 +47,7 @@ const Navbar = () => {
         onClose={handleClose}
         nestedSidebarOpen={showNestedSidebar}
         nestedSidebarHandle={handleNestedSidebar}
+        nestedSidebarClose={handleNestedSidebarClose}
       />
       <nav className="px-6 md:py-2  flex items-center justify-between md:justify-normal bg-slate-100 border-b-2">
         <div className="md:hidden">

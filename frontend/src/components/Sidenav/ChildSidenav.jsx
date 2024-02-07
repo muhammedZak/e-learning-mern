@@ -1,43 +1,37 @@
-import React from 'react';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ListItems from '../ListItems/ListItems';
 
-const ChildSidenav = ({ open }) => {
+const content = [
+  { id: 0, text: 'Web Development' },
+  { id: 1, text: 'Mobile Development' },
+  { id: 2, text: 'Data Science' },
+  { id: 3, text: 'Database Design & Development' },
+  { id: 4, text: 'Game Development' },
+  { id: 5, text: 'Software Testing' },
+  { id: 6, text: 'Programming Languages' },
+  { id: 7, text: 'No-Code Development' },
+];
+
+const ChildSidenav = ({ open, nestedClose, onClose }) => {
   return (
     <>
       <div
-        className={`${
-          open ? 'w-72' : 'w-0'
-        } h-full fixed z-20 top-0 left-0 bg-slate-100  overflow-x-hidden overflow-y-scroll`}
+        className={`transition-spacing duration-300 ease-in-out ${
+          open ? 'ml-0' : '-ml-72'
+        } w-72 h-full fixed z-20 top-0 left-0 bg-slate-100  overflow-x-hidden overflow-y-scroll`}
       >
-        <div className="py-5">
-          <ul>
-            <li className="pl-5 py-2 pr-1 hover:bg-slate-200 cursor-pointer">
-              <a className="font-medium" href="#">
-                Login
-              </a>
-            </li>
-            <li className="pl-5 py-2 pr-1 hover:bg-slate-200 cursor-pointer">
-              <a className="font-medium" href="#">
-                Sign Up
-              </a>
-            </li>
-          </ul>
+        <div
+          onClick={nestedClose}
+          className="pl-5 py-4 pr-1 font-medium bg-amber-100 hover:bg-slate-200 cursor-pointer"
+        >
+          <ChevronLeftIcon className="mr-5" />
+          Menu
         </div>
+
         <hr />
-        <h5 className="pl-5 py-2 text-lg font-medium text-slate-600">
-          Categories
-        </h5>
+
         <div className="">
-          {/* <ListItems items={items} onClick={handleNestedSidebar} /> */}
-        </div>
-        <hr />
-        <div>
-          <ul className="py-5">
-            <li className="py-2 pl-5  hover:bg-slate-200">
-              <a className="font-medium" href="#">
-                Become a instructor
-              </a>
-            </li>
-          </ul>
+          <ListItems items={content} onClick={onClose} isLink="true" />
         </div>
       </div>
     </>
