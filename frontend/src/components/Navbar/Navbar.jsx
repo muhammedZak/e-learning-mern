@@ -1,0 +1,108 @@
+import './Navbar.css';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import CloseIcon from '@mui/icons-material/Close';
+
+import { useState } from 'react';
+import Sidenav from '../Sidenav/Sidenav';
+
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+  const [showNestedSidebar, setShowNestedSidebar] = useState(false);
+
+  const handleNestedSidebar = () => {
+    setShowNestedSidebar(!showNestedSidebar);
+  };
+
+  const handleNestedSidebarClose = () => {
+    setShowNestedSidebar(false);
+  };
+
+  const handleDrawerOpen = () => {
+    setOpen(!open);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setShowNestedSidebar(false);
+  };
+
+  return (
+    <>
+      {(open || showNestedSidebar) && (
+        <div className="overlay" onClick={handleClose}></div>
+      )}
+      <button
+        onClick={handleClose}
+        className={`${
+          open ? 'absolute' : 'hidden'
+        } p-3 z-10 left-80 top-5   rounded-full bg-slate-300 transition-colors hover:bg-slate-200`}
+      >
+        <CloseIcon />
+      </button>
+      <Sidenav
+        open={open}
+        onClose={handleClose}
+        nestedSidebarOpen={showNestedSidebar}
+        nestedSidebarHandle={handleNestedSidebar}
+      />
+      <nav className="px-6 md:py-2  flex items-center justify-between md:justify-normal bg-slate-100 border-b-2">
+        <div className="md:hidden">
+          <IconButton onClick={handleDrawerOpen}>
+            <MenuIcon className="text-gray-900" />
+          </IconButton>
+        </div>
+        <div className="flex-1 md:flex-none flex justify-center md:order-first">
+          <img
+            className="w-16 object-cover"
+            src="https://logowik.com/content/uploads/images/udemy-new-20212512.jpg"
+            alt="logo"
+          />
+        </div>
+        <a
+          href="#"
+          className="hidden mx-4 md:block  text-slate-900 text-sm font-medium"
+        >
+          Categories
+        </a>
+        <div className="hidden md:block flex-1">
+          <div className="border-2 w-60 flex  rounded-sm border-slate-500 p-1">
+            <input
+              className="outline-none flex-1 bg-inherit"
+              type="search"
+              placeholder="Search here"
+            />
+            <SearchOutlinedIcon className="text-slate-900" />
+          </div>
+        </div>
+        <div className="mr-10 hidden lg:block  text-slate-900 text-sm font-medium">
+          Teach on Udemy
+        </div>
+        <div className="md:hidden">
+          <IconButton>
+            <SearchOutlinedIcon className="text-gray-900" />
+          </IconButton>
+        </div>
+        <div className="mr-2">
+          <IconButton>
+            <ShoppingCartOutlinedIcon className="text-gray-900" />
+          </IconButton>
+        </div>
+
+        <div className="hidden ml-auto md:flex ">
+          <button className="px-3 py-1 text-black text-sm font-medium border border-black hover:bg-slate-200">
+            LOGIN
+          </button>
+          <button className="px-3 py-1 ml-2 text-black text-sm font-medium border border-black hover:bg-slate-200">
+            SIGNUP
+          </button>
+        </div>
+      </nav>
+      {/* <Sidebar open={open} onClose={handleDrawerClose} /> */}
+    </>
+  );
+};
+
+export default Navbar;
