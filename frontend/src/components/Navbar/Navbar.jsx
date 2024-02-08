@@ -81,7 +81,7 @@ const Navbar = () => {
             onMouseLeave={onCategoryMouseLeave}
             className="relative"
           >
-            <button className="hidden mx-4  md:block h-20 cursor-auto  text-slate-900 text-sm font-medium">
+            <button className="hidden mx-4  md:block  cursor-auto  text-slate-900 text-sm font-medium">
               Categories
             </button>
             <NavbarDropdown show={showCategoryDropdown} />

@@ -35,13 +35,14 @@ const NavbarDropdown = ({ show }) => {
   };
 
   return (
-    <div className={` ${show ? 'absolute' : 'hidden'} flex gap-1`}>
-      <div className="mt-2"></div>
-      <div className="w-72 bg-slate-100">
+    <div className={` ${show ? 'absolute' : 'hidden'} flex gap-1 z-50`}>
+      <div className="w-72 bg-slate-100 mt-8">
         <ListItems items={items} onMouseEnter={onListItemMouseEnter} />
       </div>
       <div
-        className={`w-72  bg-slate-100 ${openDropRight ? 'block' : 'hidden'}`}
+        className={`w-72  bg-slate-100 mt-8 ${
+          openDropRight ? 'block' : 'hidden'
+        }`}
       >
         <ListItems items={content} isLink={1} />
       </div>
