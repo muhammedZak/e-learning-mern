@@ -34,7 +34,7 @@ const MainSlider = () => {
     nextArrow: <NextBtn />,
   };
   return (
-    <div className="h-60">
+    <div>
       <Slider {...settings}>
         <div className="h-96">
           <img
