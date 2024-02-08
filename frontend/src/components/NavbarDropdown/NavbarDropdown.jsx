@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ListItems from '../ListItems/ListItems';
 
 const items = [
@@ -12,12 +12,38 @@ const items = [
   { id: 7, icon: true, text: 'Lifestyle' },
 ];
 
+const content = [
+  { id: 0, text: 'Web Development' },
+  { id: 1, text: 'Mobile Development' },
+  { id: 2, text: 'Data Science' },
+  { id: 3, text: 'Database Design & Development' },
+  { id: 4, text: 'Game Development' },
+  { id: 5, text: 'Software Testing' },
+  { id: 6, text: 'Programming Languages' },
+  { id: 7, text: 'No-Code Development' },
+];
+
 const NavbarDropdown = ({ show }) => {
+  const [openDropRight, setOpenDropRight] = useState(false);
+
+  useEffect(() => {
+    setOpenDropRight(false);
+  }, [show]);
+
+  const onListItemMouseEnter = () => {
+    setOpenDropRight(true);
+  };
+
   return (
-    <div className={` ${show ? 'absolute' : 'hidden'} `}>
+    <div className={` ${show ? 'absolute' : 'hidden'} flex gap-1`}>
       <div className="mt-2"></div>
-      <div className="w-60 bg-slate-100">
-        <ListItems items={items} />
+      <div className="w-72 bg-slate-100">
+        <ListItems items={items} onMouseEnter={onListItemMouseEnter} />
+      </div>
+      <div
+        className={`w-72  bg-slate-100 ${openDropRight ? 'block' : 'hidden'}`}
+      >
+        <ListItems items={content} isLink={1} />
       </div>
     </div>
   );

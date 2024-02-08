@@ -1,10 +1,10 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 // import { Link } from 'react-router-dom';
 
-const ListItems = ({ items, onClick, isLink }) => {
+const ListItems = ({ items, onClick, isLink, onMouseEnter }) => {
   let content;
 
-  if (isLink) {
+  if (isLink === 1) {
     content = items.map((item) => (
       <li
         onClick={onClick}
@@ -17,6 +17,7 @@ const ListItems = ({ items, onClick, isLink }) => {
   } else {
     content = items.map((item) => (
       <li
+        onMouseEnter={onMouseEnter}
         onClick={onClick}
         key={item.id}
         className="pl-5 py-3 pr-1 hover:bg-slate-200 flex justify-between cursor-pointer"

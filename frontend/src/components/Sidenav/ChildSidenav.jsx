@@ -31,7 +31,7 @@ const ChildSidenav = ({ open, nestedClose, onClose }) => {
         <hr />
 
         <div className="">
-          <ListItems items={content} onClick={onClose} isLink="true" />
+          <ListItems items={content} onClick={onClose} isLink={1} />
         </div>
       </div>
     </>
