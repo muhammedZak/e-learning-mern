@@ -7,10 +7,23 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { useState } from 'react';
 import Sidenav from '../Sidenav/Sidenav';
+import NavbarDropdown from '../NavbarDropdown/NavbarDropdown';
+import LoginSignupButton from '../Buttons/LoginSignupButton/LoginSignupButton';
+import NavbarSearch from '../NavbarSearchBar/NavbarSearch';
+import NavbarIconButtons from '../Buttons/NavbarIconButtons/NavbarIconButtons';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [showNestedSidebar, setShowNestedSidebar] = useState(false);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+
+  const onCategoryMouseEnter = () => {
+    setShowCategoryDropdown(true);
+  };
+
+  const onCategoryMouseLeave = () => {
+    setShowCategoryDropdown(false);
+  };
 
   const handleNestedSidebar = () => {
     setShowNestedSidebar(!showNestedSidebar);
@@ -49,7 +62,7 @@ const Navbar = () => {
         nestedSidebarHandle={handleNestedSidebar}
         nestedSidebarClose={handleNestedSidebarClose}
       />
-      <nav className="px-6 md:py-2  flex items-center justify-between md:justify-normal bg-slate-100 border-b-2">
+      <nav className="px-6 md:py-2 h-16 flex items-center justify-between md:justify-normal bg-slate-100 border-b-2">
         <div className="md:hidden">
           <IconButton onClick={handleDrawerOpen}>
             <MenuIcon className="text-gray-900" />
@@ -62,46 +75,31 @@ const Navbar = () => {
             alt="logo"
           />
         </div>
-        <a
-          href="#"
-          className="hidden mx-4 md:block  text-slate-900 text-sm font-medium"
-        >
-          Categories
-        </a>
-        <div className="hidden md:block flex-1">
-          <div className="border-2 w-60 flex  rounded-sm border-slate-500 p-1">
-            <input
-              className="outline-none flex-1 bg-inherit"
-              type="search"
-              placeholder="Search here"
-            />
-            <SearchOutlinedIcon className="text-slate-900" />
+        <div>
+          <div
+            onMouseEnter={onCategoryMouseEnter}
+            onMouseLeave={onCategoryMouseLeave}
+            className="relative"
+          >
+            <button className="hidden mx-4  md:block h-20 cursor-auto  text-slate-900 text-sm font-medium">
+              Categories
+            </button>
+            <NavbarDropdown show={showCategoryDropdown} />
           </div>
         </div>
+
+        <NavbarSearch />
         <div className="mr-10 hidden lg:block  text-slate-900 text-sm font-medium">
           Teach on Udemy
         </div>
-        <div className="md:hidden">
-          <IconButton>
-            <SearchOutlinedIcon className="text-gray-900" />
-          </IconButton>
-        </div>
-        <div className="mr-2">
-          <IconButton>
-            <ShoppingCartOutlinedIcon className="text-gray-900" />
-          </IconButton>
-        </div>
-
-        <div className="hidden ml-auto md:flex ">
-          <button className="px-3 py-1 text-black text-sm font-medium border border-black hover:bg-slate-200">
-            LOGIN
-          </button>
-          <button className="px-3 py-1 ml-2 text-black text-sm font-medium border border-black hover:bg-slate-200">
-            SIGNUP
-          </button>
-        </div>
+        <NavbarIconButtons classes="md:hidden">
+          <SearchOutlinedIcon className="text-gray-900" />
+        </NavbarIconButtons>
+        <NavbarIconButtons classes="mr-2">
+          <ShoppingCartOutlinedIcon className="text-gray-900" />
+        </NavbarIconButtons>
+        <LoginSignupButton />
       </nav>
-      {/* <Sidebar open={open} onClose={handleDrawerClose} /> */}
     </>
   );
 };
