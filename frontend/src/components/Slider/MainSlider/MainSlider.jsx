@@ -30,11 +30,11 @@ const MainSlider = () => {
     autoplaySpeed: 5000,
     slidesToShow: 1,
     slidesToScroll: 1,
-    prevArrow: <PreviousBtn />,
-    nextArrow: <NextBtn />,
+    prevArrow: <PreviousBtn className="mainSlider" />,
+    nextArrow: <NextBtn className="mainSlider" />,
   };
   return (
-    <div>
+    <div className="mainSlider">
       <Slider {...settings}>
         <div className="h-96">
           <img
