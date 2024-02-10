@@ -7,6 +7,7 @@ import CategoryLists from '../../components/CategoryLists/CategoryLists';
 import CourseListContainer from '../../components/CourseListContainer/CourseListContainer';
 import InstructorSection from '../../components/InstructorSection/InstructorSection';
 import Testimonial from '../../components/Testimonial/Testimonial';
+import Footer from '../../components/Footer/Footer';
 
 const HomePage = () => {
   return (
@@ -40,6 +41,9 @@ const HomePage = () => {
         <Container>
           <Testimonial />
         </Container>
+      </div>
+      <div>
+        <Footer />
       </div>
     </>
   );
