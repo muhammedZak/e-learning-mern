@@ -37,7 +37,7 @@ const HomePage = () => {
           <InstructorSection />
         </Container>
       </div>
-      <div className="pt-4">
+      <div className="pt-4 pb-10">
         <Container>
           <Testimonial />
         </Container>

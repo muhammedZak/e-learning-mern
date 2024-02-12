@@ -18,6 +18,13 @@
   right: 10px;
 }
 
+.category .slick-prev {
+  left: 0;
+}
+.category .slick-next {
+  right: 0;
+}
+
 .testimonial .slick-prev {
   left: 0;
   top: 150px;
