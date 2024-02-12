@@ -25,6 +25,10 @@
   right: 0;
 }
 
+.courseList .slick-prev {
+  left: 0;
+}
+
 .testimonial .slick-prev {
   left: 0;
   top: 150px;
