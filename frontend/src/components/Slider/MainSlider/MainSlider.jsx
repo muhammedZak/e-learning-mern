@@ -8,7 +8,11 @@ import './MainSlider.css';
 export const PreviousBtn = ({ className, onClick }) => {
   return (
     <div className={className} onClick={onClick}>
-      <ArrowBackIosIcon fontSize="small" />
+      <ArrowBackIosIcon
+        sx={{
+          fontSize: '15px',
+        }}
+      />
     </div>
   );
 };
@@ -16,7 +20,11 @@ export const PreviousBtn = ({ className, onClick }) => {
 export const NextBtn = ({ className, onClick }) => {
   return (
     <div className={className} onClick={onClick}>
-      <ArrowForwardIosIcon fontSize="small" />
+      <ArrowForwardIosIcon
+        sx={{
+          fontSize: '15px',
+        }}
+      />
     </div>
   );
 };

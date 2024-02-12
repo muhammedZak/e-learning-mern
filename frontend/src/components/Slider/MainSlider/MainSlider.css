@@ -18,6 +18,10 @@
   right: 10px;
 }
 
+.category .slick-track {
+  display: flex;
+}
+
 .category .slick-prev {
   left: 0;
 }
