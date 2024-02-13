@@ -16,10 +16,10 @@ const OnMobile = () => {
   };
   return (
     <div className="category">
-      <Slider {...settings} className="px-3">
+      <Slider {...settings} className="px-3 category-slider-mobile">
         {['React', 'Web Development', 'Javascript', 'Amazon AWS'].map(
           (item, index) => (
-            <div key={index} className="mx-3">
+            <div key={index} className="mx-3 ">
               <button className="text-lg text-slate-900 font-medium">
                 {item}
               </button>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ListItems from '../ListItems/ListItems';
 import './Sidenav.css';
 import ChildSidenav from './ChildSidenav';
+import { Link } from 'react-router-dom';
 
 const items = [
   { id: 0, icon: true, text: 'Development' },
@@ -37,14 +38,14 @@ const Sidenav = ({
         <div className="py-5">
           <ul>
             <li className="pl-5 py-2 pr-1 hover:bg-slate-200 cursor-pointer">
-              <a className="font-medium" href="#">
+              <Link to="/login" className="font-medium " onClick={onClose}>
                 Login
-              </a>
+              </Link>
             </li>
             <li className="pl-5 py-2 pr-1 hover:bg-slate-200 cursor-pointer">
-              <a className="font-medium" href="#">
+              <Link to="/signup" className="font-medium" onClick={onClose}>
                 Sign Up
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

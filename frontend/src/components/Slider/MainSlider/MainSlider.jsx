@@ -11,6 +11,7 @@ export const PreviousBtn = ({ className, onClick }) => {
       <ArrowBackIosIcon
         sx={{
           fontSize: '15px',
+          color: 'black',
         }}
       />
     </div>
@@ -23,6 +24,7 @@ export const NextBtn = ({ className, onClick }) => {
       <ArrowForwardIosIcon
         sx={{
           fontSize: '15px',
+          color: 'black',
         }}
       />
     </div>

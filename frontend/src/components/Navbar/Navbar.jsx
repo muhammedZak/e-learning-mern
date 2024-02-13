@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Navbar.css';
+import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -73,18 +74,20 @@ const Navbar = () => {
           nestedSidebarClose={handleNestedSidebarClose}
         />
       )}
-      <nav className="px-6 md:py-2 h-16 flex items-center justify-between md:justify-normal bg-slate-100 border-b-2">
+      <nav className="px-6  md:py-2 h-16 flex items-center justify-between md:justify-normal bg-slate-100 border-b-2">
         <div className="md:hidden">
           <IconButton onClick={handleDrawerOpen}>
             <MenuIcon className="text-gray-900" />
           </IconButton>
         </div>
         <div className="flex-1 md:flex-none flex justify-center md:order-first">
-          <img
-            className="w-16 object-cover"
-            src="https://logowik.com/content/uploads/images/udemy-new-20212512.jpg"
-            alt="logo"
-          />
+          <Link to="/">
+            <img
+              className="w-16 object-cover"
+              src="https://logowik.com/content/uploads/images/udemy-new-20212512.jpg"
+              alt="logo"
+            />
+          </Link>
         </div>
         {!isMobile && (
           <>

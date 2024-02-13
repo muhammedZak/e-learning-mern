@@ -1,14 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Button = ({ margin, children }) => {
   return (
-    <button
-      className={`${
-        margin && 'ml-2'
-      } px-3 py-1 text-black text-sm font-medium border border-black hover:bg-slate-200`}
-    >
-      {children}
-    </button>
+    <Link to={children === 'LOGIN' ? '/login' : '/signup'}>
+      <button
+        className={`${
+          margin && 'ml-2'
+        } px-3 py-1 text-black text-sm font-medium border border-black hover:bg-slate-200`}
+      >
+        {children}
+      </button>
+    </Link>
   );
 };
 
