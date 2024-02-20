@@ -1,14 +1,39 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { useSignupUserMutation } from '../../store';
+import { setCredentials } from '../../store/slices/authSlice';
+import { useEffect } from 'react';
 
 const SignUpPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [signupUser] = useSignupUserMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get('redirect') || '/';
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, userInfo]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    const res = await signupUser(data).unwrap();
+    dispatch(setCredentials(res));
+    navigate(redirect);
+  };
 
   return (
     <div className="h-screen flex items-center justify-center">
@@ -100,7 +125,9 @@ const SignUpPage = () => {
         <p className="text-center text-sm">
           Already have an account?
           <span className="underline font-medium text-blue-500">
-            <Link to="/login">Login</Link>
+            <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+              Login
+            </Link>
           </span>
         </p>
       </div>
