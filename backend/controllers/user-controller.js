@@ -15,7 +15,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
   });
-  console.log(newUser);
+
   if (newUser) {
     createSendToken(res, newUser._id);
 
@@ -29,4 +29,29 @@ exports.signup = catchAsync(async (req, res, next) => {
     res.status(400);
     throw new Error('Invalid user data');
   }
+});
+
+exports.login = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email }).select('+password');
+
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    res.status(401);
+    throw new Error('Incorrect email or password');
+  }
+
+  createSendToken(res, user._id);
+
+  res.status(200).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  });
+});
+
+exports.logout = catchAsync(async (req, res, next) => {
+  res.clearCookie('jwt');
+  res.status(200).json({ message: 'Logged out successfully' });
 });

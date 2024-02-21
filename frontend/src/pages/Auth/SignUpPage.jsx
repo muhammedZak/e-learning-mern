@@ -1,10 +1,10 @@
+import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useSignupUserMutation } from '../../store';
 import { setCredentials } from '../../store/slices/authSlice';
-import { useEffect } from 'react';
 
 const SignUpPage = () => {
   const dispatch = useDispatch();

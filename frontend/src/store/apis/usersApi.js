@@ -26,6 +26,11 @@ const usersApi = createApi({
           };
         },
       }),
+      logoutUser: builder.mutation({
+        query: () => {
+          return { url: '/api/users/logout', method: 'POST' };
+        },
+      }),
     };
   },
 });
