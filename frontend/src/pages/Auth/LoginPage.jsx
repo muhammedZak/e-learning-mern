@@ -83,14 +83,16 @@ const LoginPage = () => {
         <p className="text-center">
           Or
           <span className="ml-1 underline font-medium text-blue-500">
-            <Link to="/signup">forgot password?</Link>
+            <Link to="/">forgot password?</Link>
           </span>
         </p>
         <hr className="my-6 " />
         <p className="text-center text-sm">
           Do not have an account?
           <span className="underline font-medium text-blue-500">
-            <Link to="/signup">Sign up</Link>
+            <Link to={redirect ? `/signup?redirect=${redirect}` : '/signup'}>
+              Sign up
+            </Link>
           </span>
         </p>
       </div>

@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CloseIcon from '@mui/icons-material/Close';
+import { useSelector } from 'react-redux';
 
 import Sidenav from '../Sidenav/Sidenav';
 import NavbarDropdown from '../NavbarDropdown/NavbarDropdown';
@@ -13,6 +14,7 @@ import LoginSignupButton from '../Buttons/LoginSignupButton/LoginSignupButton';
 import NavbarSearch from '../NavbarSearchBar/NavbarSearch';
 import NavbarIconButtons from '../Buttons/NavbarIconButtons/NavbarIconButtons';
 import useScreenSize from '../../customHooks/useScreenSize';
+import ProfileIcon from '../avatarIcon/ProfileIcon';
 
 const Navbar = () => {
   const { width: screenWidth } = useScreenSize();
@@ -20,6 +22,8 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [showNestedSidebar, setShowNestedSidebar] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+
+  const { userInfo } = useSelector((state) => state.auth);
 
   const onCategoryMouseEnter = () => {
     setShowCategoryDropdown(true);
@@ -116,7 +120,7 @@ const Navbar = () => {
         <NavbarIconButtons classes="mr-2">
           <ShoppingCartOutlinedIcon className="text-gray-900" />
         </NavbarIconButtons>
-        <LoginSignupButton />
+        {userInfo ? <ProfileIcon userInfo={userInfo} /> : <LoginSignupButton />}
       </nav>
     </>
   );
