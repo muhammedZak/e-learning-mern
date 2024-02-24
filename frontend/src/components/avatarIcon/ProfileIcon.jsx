@@ -54,12 +54,12 @@ const ProfileIcon = ({ userInfo }) => {
               <div className="">{avatar}</div>
               <div className="">
                 <Link className="block font-medium text-lg hover:text-blue-600">
-                  {userInfo.name.length > 10
+                  {userInfo.name?.length > 10
                     ? userInfo.name.substring(0, 10) + '...'
                     : userInfo.name}
                 </Link>
                 <Link className="hover:text-blue-600">
-                  {userInfo.email.length > 15
+                  {userInfo.email?.length > 15
                     ? userInfo.email.substring(0, 18) + '...'
                     : userInfo.email}
                 </Link>

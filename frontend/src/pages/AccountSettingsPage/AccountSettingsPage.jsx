@@ -22,14 +22,6 @@ const AccountSettingsPage = () => {
     setIschanging(value);
   };
 
-  const handleSubmit = async (data) => {
-    console.log(data.password);
-    if (isChanging === 'email') {
-      const { email, password } = data;
-      await emailEdit({ email, password });
-    }
-  };
-
   return (
     <div className="px-10 py-20">
       <div>

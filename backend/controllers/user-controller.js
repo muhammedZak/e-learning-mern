@@ -73,12 +73,14 @@ exports.editEmail = catchAsync(async (req, res, next) => {
 
   user.email = email;
   const updatedUser = await user.save();
-  createSendToken(res, user._id);
 
   if (updatedUser) {
+    createSendToken(res, user._id);
     res.status(201).json({
       _id: updatedUser._id,
+      name: updatedUser.name,
       email: updatedUser.email,
+      role: updatedUser.role,
     });
   } else {
     res.status(404);
@@ -106,9 +108,8 @@ exports.passwordChange = catchAsync(async (req, res, next) => {
 
   const updatedUser = await user.save();
 
-  createSendToken(res, user._id);
-
   if (updatedUser) {
+    createSendToken(res, user._id);
     res.status(201).json({
       _id: updatedUser._id,
       name: updatedUser.name,

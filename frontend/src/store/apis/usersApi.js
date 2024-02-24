@@ -41,6 +41,15 @@ const usersApi = createApi({
           };
         },
       }),
+      passwordChange: builder.mutation({
+        query: (data) => {
+          return {
+            url: '/api/users/change-password',
+            method: 'PUT',
+            body: data,
+          };
+        },
+      }),
     };
   },
 });
@@ -50,6 +59,7 @@ export const {
   useSignupUserMutation,
   useLogoutUserMutation,
   useEmailChangeMutation,
+  usePasswordChangeMutation,
 } = usersApi;
 
 export { usersApi };
