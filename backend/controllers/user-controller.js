@@ -64,14 +64,16 @@ exports.editEmail = catchAsync(async (req, res, next) => {
     throw new Error('Please fill the credentials');
   }
 
-  const updatedUser = await User.findByIdAndUpdate(
-    req.user._id,
-    { email },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  const user = await User.findById(req.user._id).select('+password');
+
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    res.status(401);
+    throw new Error('Incorrect password');
+  }
+
+  user.email = email;
+  const updatedUser = await user.save();
+  createSendToken(res, user._id);
 
   if (updatedUser) {
     res.status(201).json({
@@ -81,5 +83,40 @@ exports.editEmail = catchAsync(async (req, res, next) => {
   } else {
     res.status(404);
     throw new Error('User not found');
+  }
+});
+
+exports.passwordChange = catchAsync(async (req, res, next) => {
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+
+  if (!confirmPassword || !currentPassword || !newPassword) {
+    res.status(401);
+    throw new Error('Please fill the required field');
+  }
+
+  const user = await User.findById(req.user._id).select('+password');
+
+  if (!user || !(await user.correctPassword(currentPassword, user.password))) {
+    res.status(401);
+    throw new Error('Incorrect password');
+  }
+
+  user.password = newPassword;
+  user.passwordConfirm = confirmPassword;
+
+  const updatedUser = await user.save();
+
+  createSendToken(res, user._id);
+
+  if (updatedUser) {
+    res.status(201).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+    });
+  } else {
+    res.status(404);
+    throw new Error('Something went wrong');
   }
 });

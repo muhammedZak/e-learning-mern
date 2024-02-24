@@ -5,6 +5,7 @@ const {
   login,
   logout,
   editEmail,
+  passwordChange,
 } = require('../controllers/user-controller');
 
 const { isAdmin, protect } = require('../middlewares/auth-middleware');
@@ -15,6 +16,8 @@ router.post('/signup', signup);
 router.post('/signin', login);
 router.post('/logout', logout);
 
-router.put('/email-edit', protect, editEmail);
+router.use(protect);
+router.put('/email-edit', editEmail);
+router.put('/change-password', passwordChange);
 
 module.exports = router;
