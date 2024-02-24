@@ -18,6 +18,8 @@ import '@fontsource/roboto/700.css';
 import HomePage from './pages/HomePage/HomePage.jsx';
 import LoginPage from './pages/Auth/LoginPage.jsx';
 import SignUp from './pages/Auth/SignUpPage.jsx';
+import PrivateRoute from './components/PrivateRoutes.jsx';
+import AccountSettingsPage from './pages/AccountSettingsPage/AccountSettingsPage.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +27,10 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignUp />} />
+      {/* private routes */}
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="/account-settings" element={<AccountSettingsPage />} />
+      </Route>
     </Route>
   )
 );

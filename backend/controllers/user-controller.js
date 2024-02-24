@@ -55,3 +55,31 @@ exports.logout = catchAsync(async (req, res, next) => {
   res.clearCookie('jwt');
   res.status(200).json({ message: 'Logged out successfully' });
 });
+
+exports.editEmail = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    res.status(400);
+    throw new Error('Please fill the credentials');
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user._id,
+    { email },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (updatedUser) {
+    res.status(201).json({
+      _id: updatedUser._id,
+      email: updatedUser.email,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});

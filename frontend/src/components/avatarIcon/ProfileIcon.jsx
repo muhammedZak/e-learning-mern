@@ -91,7 +91,10 @@ const ProfileIcon = ({ userInfo }) => {
             <hr className="w-full" />
             <div className="px-5 py-2">
               <div className="leading-loose">
-                <Link to="#" className="hover:text-blue-600 text-sm">
+                <Link
+                  to="/account-settings"
+                  className="hover:text-blue-600 text-sm"
+                >
                   Account Settings
                 </Link>
               </div>

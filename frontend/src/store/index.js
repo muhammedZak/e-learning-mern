@@ -19,4 +19,5 @@ export {
   useLoginUserMutation,
   useSignupUserMutation,
   useLogoutUserMutation,
+  useEmailChangeMutation,
 } from './apis/usersApi';

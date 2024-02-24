@@ -5,6 +5,7 @@ const usersApi = createApi({
   reducerPath: 'users',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:5000',
+    credentials: 'include',
   }),
   endpoints(builder) {
     return {
@@ -31,6 +32,15 @@ const usersApi = createApi({
           return { url: '/api/users/logout', method: 'POST' };
         },
       }),
+      emailChange: builder.mutation({
+        query: (data) => {
+          return {
+            url: '/api/users/email-edit',
+            method: 'PUT',
+            body: data,
+          };
+        },
+      }),
     };
   },
 });
@@ -39,6 +49,7 @@ export const {
   useLoginUserMutation,
   useSignupUserMutation,
   useLogoutUserMutation,
+  useEmailChangeMutation,
 } = usersApi;
 
 export { usersApi };
