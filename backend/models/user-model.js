@@ -14,13 +14,18 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
   },
+  headline: { type: String, maxLength: 60 },
+  bio: {
+    type: String,
+    maxLength: 200,
+  },
   photo: {
     type: String,
     default: 'default.jpg',
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
+    enum: ['user', 'admin', 'instructor'],
     default: 'user',
   },
   password: {
@@ -46,12 +51,17 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  try {
+    if (!this.isModified('password')) return next();
 
-  this.password = await bcrypt.hash(this.password, 12);
+    this.password = await bcrypt.hash(this.password, 12);
 
-  this.passwordConfirm = undefined;
-  next();
+    this.passwordConfirm = undefined;
+    next();
+  } catch (error) {
+    console.error(err);
+    next(err);
+  }
 });
 
 userSchema.methods.correctPassword = async function (

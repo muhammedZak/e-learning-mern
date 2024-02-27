@@ -20,6 +20,8 @@ import LoginPage from './pages/Auth/LoginPage.jsx';
 import SignUp from './pages/Auth/SignUpPage.jsx';
 import PrivateRoute from './components/PrivateRoutes.jsx';
 import AccountSettingsPage from './pages/AccountSettingsPage/AccountSettingsPage.jsx';
+import Dashboard from './pages/Account/Dashboard.jsx';
+import ProfileEdit from './pages/Account/ProfileEdit.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +32,9 @@ const router = createBrowserRouter(
       {/* private routes */}
       <Route path="" element={<PrivateRoute />}>
         <Route path="/account-settings" element={<AccountSettingsPage />} />
+        <Route path="/account" element={<Dashboard />}>
+          <Route path="/account" element={<ProfileEdit />} />
+        </Route>
       </Route>
     </Route>
   )

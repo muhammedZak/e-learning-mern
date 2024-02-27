@@ -53,12 +53,15 @@ const ProfileIcon = ({ userInfo }) => {
             <div className="flex items-center gap-6 p-6">
               <div className="">{avatar}</div>
               <div className="">
-                <Link className="block font-medium text-lg hover:text-blue-600">
+                <Link
+                  to="/account"
+                  className="block font-medium text-lg hover:text-blue-600"
+                >
                   {userInfo.name?.length > 10
                     ? userInfo.name.substring(0, 10) + '...'
                     : userInfo.name}
                 </Link>
-                <Link className="hover:text-blue-600">
+                <Link to="/account" className="hover:text-blue-600">
                   {userInfo.email?.length > 15
                     ? userInfo.email.substring(0, 18) + '...'
                     : userInfo.email}
@@ -112,7 +115,10 @@ const ProfileIcon = ({ userInfo }) => {
             <hr className="w-full" />
             <div className="px-5 py-2">
               <div className="leading-loose">
-                <Link to="#" className="hover:text-blue-600 text-sm">
+                <Link
+                  to="/account/edit-profile"
+                  className="hover:text-blue-600 text-sm"
+                >
                   Edit Profile
                 </Link>
               </div>
