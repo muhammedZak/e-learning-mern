@@ -14,6 +14,31 @@ const Dashboard = () => {
             />
             <span className="font-medium text-lg">Muhammed Zakariya</span>
           </div>
+          <div className="">
+            <ul className="">
+              <li className="py-2 hover:text-white hover:bg-slate-950">
+                <span className="px-5">Profile</span>
+              </li>
+              <li className="py-2 hover:text-white hover:bg-slate-950">
+                <span className="px-5">Photo</span>
+              </li>
+              <li className="py-2 hover:text-white hover:bg-slate-950">
+                <span className="px-5">Account Security</span>
+              </li>
+              <li className="py-2 hover:text-white hover:bg-slate-950">
+                <span className="px-5">Payment Methods</span>
+              </li>
+              <li className="py-2 hover:text-white hover:bg-slate-950">
+                <span className="px-5">Notifications</span>
+              </li>
+              <li className="py-2 hover:text-white hover:bg-slate-950">
+                <span className="px-5">Messages</span>
+              </li>
+              <li className="py-2 hover:text-white hover:bg-slate-950">
+                <span className="px-5">Close Account</span>
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="flex-1 border">
           <div className="py-10 text-center border-b">
