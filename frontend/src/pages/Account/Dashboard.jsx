@@ -1,9 +1,8 @@
-import React from 'react';
-import ProfileEdit from './ProfileEdit';
+import { Outlet, NavLink } from 'react-router-dom';
 
 const Dashboard = () => {
   return (
-    <div className="px-32 py-10">
+    <div className="px-10 md:px-24 md:py-10">
       <div className="flex shadow-md">
         <div className="w-1/4 border">
           <div className="p-6 flex flex-col items-center gap-1">
@@ -12,31 +11,82 @@ const Dashboard = () => {
               src="https://img-b.udemycdn.com/user/200_H/223429164_335e.jpg"
               alt="photo"
             />
-            <span className="font-medium text-lg">Muhammed Zakariya</span>
+            <span className=" font-medium text-lg">Muhammed Zakariya</span>
           </div>
           <div className="">
             <ul className="">
-              <li className="py-2 hover:text-white hover:bg-slate-950">
+              <NavLink
+                to="/account"
+                end
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 text-white bg-slate-950'
+                    : 'block py-2 hover:text-white hover:bg-slate-950'
+                }
+                exact="true"
+              >
                 <span className="px-5">Profile</span>
-              </li>
-              <li className="py-2 hover:text-white hover:bg-slate-950">
+              </NavLink>
+              <NavLink
+                to="/account/photo"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 text-white bg-slate-950'
+                    : 'block py-2 hover:text-white hover:bg-slate-950'
+                }
+              >
                 <span className="px-5">Photo</span>
-              </li>
-              <li className="py-2 hover:text-white hover:bg-slate-950">
+              </NavLink>
+              <NavLink
+                to="/account/account-security"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 text-white bg-slate-950'
+                    : 'block py-2 hover:text-white hover:bg-slate-950'
+                }
+              >
                 <span className="px-5">Account Security</span>
-              </li>
-              <li className="py-2 hover:text-white hover:bg-slate-950">
+              </NavLink>
+              <NavLink
+                to="/account/payment-methods"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 text-white bg-slate-950'
+                    : 'block py-2 hover:text-white hover:bg-slate-950'
+                }
+              >
                 <span className="px-5">Payment Methods</span>
-              </li>
-              <li className="py-2 hover:text-white hover:bg-slate-950">
+              </NavLink>
+              <NavLink
+                to="/account/notifications"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 text-white bg-slate-950'
+                    : 'block py-2 hover:text-white hover:bg-slate-950'
+                }
+              >
                 <span className="px-5">Notifications</span>
-              </li>
-              <li className="py-2 hover:text-white hover:bg-slate-950">
+              </NavLink>
+              <NavLink
+                to="/account/messages"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 text-white bg-slate-950'
+                    : 'block py-2 hover:text-white hover:bg-slate-950'
+                }
+              >
                 <span className="px-5">Messages</span>
-              </li>
-              <li className="py-2 hover:text-white hover:bg-slate-950">
+              </NavLink>
+              <NavLink
+                to="/account/close-account"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 text-white bg-slate-950'
+                    : 'block py-2 hover:text-white hover:bg-slate-950'
+                }
+              >
                 <span className="px-5">Close Account</span>
-              </li>
+              </NavLink>
             </ul>
           </div>
         </div>
@@ -48,7 +98,8 @@ const Dashboard = () => {
             </span>
           </div>
           <div>
-            <ProfileEdit />
+            {/* <ProfileEdit /> */}
+            <Outlet />
           </div>
         </div>
       </div>

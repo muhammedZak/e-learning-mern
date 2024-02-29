@@ -22,6 +22,12 @@ import PrivateRoute from './components/PrivateRoutes.jsx';
 import AccountSettingsPage from './pages/AccountSettingsPage/AccountSettingsPage.jsx';
 import Dashboard from './pages/Account/Dashboard.jsx';
 import ProfileEdit from './pages/Account/ProfileEdit.jsx';
+import Photo from './pages/Account/Photo.jsx';
+import AccountSecurity from './pages/Account/AccountSecurity.jsx';
+import PaymentMethods from './pages/Account/PaymentMethods.jsx';
+import Notifications from './pages/Account/Notifications.jsx';
+import Messages from './pages/Account/Messages.jsx';
+import CloseAccount from './pages/Account/CloseAccount.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,7 +39,16 @@ const router = createBrowserRouter(
       <Route path="" element={<PrivateRoute />}>
         <Route path="/account-settings" element={<AccountSettingsPage />} />
         <Route path="/account" element={<Dashboard />}>
-          <Route path="/account" element={<ProfileEdit />} />
+          <Route index={true} element={<ProfileEdit />} />
+          <Route path="/account/photo" element={<Photo />} />
+          <Route
+            path="/account/account-security"
+            element={<AccountSecurity />}
+          />
+          <Route path="/account/payment-methods" element={<PaymentMethods />} />
+          <Route path="/account/notifications" element={<Notifications />} />
+          <Route path="/account/messages" element={<Messages />} />
+          <Route path="/account/close-account" element={<CloseAccount />} />
         </Route>
       </Route>
     </Route>
