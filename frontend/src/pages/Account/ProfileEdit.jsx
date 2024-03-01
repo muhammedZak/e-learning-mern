@@ -21,7 +21,7 @@ const ProfileEdit = () => {
 
   return (
     <div>
-      <div className="px-24 py-10 ">
+      <div className="px-3 md:px-24 py-10 ">
         <form
           className="flex flex-col gap-8 flex-wrap"
           onSubmit={handleFormSubmit}

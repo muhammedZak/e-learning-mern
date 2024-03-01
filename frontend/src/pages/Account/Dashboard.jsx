@@ -2,9 +2,9 @@ import { Outlet, NavLink } from 'react-router-dom';
 
 const Dashboard = () => {
   return (
-    <div className="px-10 md:px-24 md:py-10">
-      <div className="flex shadow-md">
-        <div className="w-1/4 border">
+    <div className="px-10 md:px-14 md:py-10 md:h-screen lg:h-auto ">
+      <div className="md:flex md:shadow-md">
+        <div className="md:w-1/4 md:border">
           <div className="p-6 flex flex-col items-center gap-1">
             <img
               className="w-28 rounded-full object-contain "
