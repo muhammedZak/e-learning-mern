@@ -21,4 +21,6 @@ export {
   useLogoutUserMutation,
   useEmailChangeMutation,
   usePasswordChangeMutation,
+  useGetMyProfileQuery,
+  useUpdateprofileMutation,
 } from './apis/usersApi';

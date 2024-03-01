@@ -50,6 +50,22 @@ const usersApi = createApi({
           };
         },
       }),
+      getMyProfile: builder.query({
+        query: () => {
+          return {
+            url: '/api/users/my-profile',
+          };
+        },
+      }),
+      updateprofile: builder.mutation({
+        query: (data) => {
+          return {
+            url: '/api/users/my-profile',
+            body: data,
+            method: 'PUT',
+          };
+        },
+      }),
     };
   },
 });
@@ -60,6 +76,8 @@ export const {
   useLogoutUserMutation,
   useEmailChangeMutation,
   usePasswordChangeMutation,
+  useGetMyProfileQuery,
+  useUpdateprofileMutation,
 } = usersApi;
 
 export { usersApi };
