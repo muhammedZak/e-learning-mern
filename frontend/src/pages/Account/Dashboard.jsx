@@ -91,14 +91,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="flex-1 border">
-          <div className="py-10 text-center border-b">
-            <h2 className=" text-4xl font-medium">Public profile</h2>
-            <span className="text-black font-medium opacity-70">
-              Add information about yourself
-            </span>
-          </div>
           <div>
-            {/* <ProfileEdit /> */}
             <Outlet />
           </div>
         </div>
