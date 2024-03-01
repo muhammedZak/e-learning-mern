@@ -6,6 +6,8 @@ const {
   logout,
   editEmail,
   passwordChange,
+  getMyProfile,
+  updateProfile,
 } = require('../controllers/user-controller');
 
 const { isAdmin, protect } = require('../middlewares/auth-middleware');
@@ -19,5 +21,6 @@ router.post('/logout', logout);
 router.use(protect);
 router.put('/email-edit', editEmail);
 router.put('/change-password', passwordChange);
+router.route('/my-profile').get(getMyProfile).put(updateProfile);
 
 module.exports = router;

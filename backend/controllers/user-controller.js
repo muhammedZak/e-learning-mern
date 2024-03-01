@@ -122,8 +122,20 @@ exports.passwordChange = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.updataProfile = catchAsync(async (req, res, next) => {
-  if (req.body.password || req.body.email) {
+exports.getMyProfile = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  res.status(200).json(user);
+});
+
+exports.updateProfile = catchAsync(async (req, res, next) => {
+  if (req.body.password || req.body.email || req.body.photo) {
     res.status(400);
     throw new Error('Cannot update email or password');
   }
