@@ -4,6 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const userRouter = require('./routes/user-routes');
+const imageUploader = require('./routes/file-uploader');
 const { notFound, errorHandler } = require('./middlewares/error-middleware');
 
 const app = express();
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/users', userRouter);
+app.use('/api/upload', imageUploader);
 
 app.use(notFound);
 app.use(errorHandler);
