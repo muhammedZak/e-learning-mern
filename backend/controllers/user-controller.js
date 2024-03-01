@@ -121,3 +121,33 @@ exports.passwordChange = catchAsync(async (req, res, next) => {
     throw new Error('Something went wrong');
   }
 });
+
+exports.updataProfile = catchAsync(async (req, res, next) => {
+  if (req.body.password || req.body.email) {
+    res.status(400);
+    throw new Error('Cannot update email or password');
+  }
+
+  const { name, headline, bio } = req.body;
+  const userId = req.user._id;
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      name,
+      headline,
+      bio,
+    },
+    { new: true }
+  );
+
+  if (!updatedUser) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  res.status(200).json({
+    name: updatedUser.name,
+    headline: updatedUser.headline,
+    bio: updatedUser.bio,
+  });
+});
