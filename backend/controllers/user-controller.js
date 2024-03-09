@@ -1,13 +1,17 @@
+// const { check, validationResult } = require('express-validator');
+const crypto = require('crypto');
 const User = require('../models/user-model');
 const catchAsync = require('../utils/catch-async');
 const { createSendToken } = require('../utils/generate-token');
+const Email = require('../utils/send-mail');
+const { generateAndStoreOtp } = require('../utils/generate-otp');
 
 exports.signup = catchAsync(async (req, res, next) => {
   const userExist = await User.findOne({ email: req.body.email });
 
   if (userExist) {
     res.status(400);
-    throw new Error('User already exists');
+    throw new Error('Email is already registered');
   }
 
   const newUser = await User.create({
@@ -140,7 +144,7 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
     throw new Error('Cannot update email or password');
   }
 
-  const { name, headline, bio } = req.body;
+  const { name, headline, bio, phone } = req.body;
   const userId = req.user._id;
 
   const updatedUser = await User.findByIdAndUpdate(
@@ -149,6 +153,7 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
       name,
       headline,
       bio,
+      phone,
     },
     { new: true }
   );
@@ -161,5 +166,99 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
     name: updatedUser.name,
     headline: updatedUser.headline,
     bio: updatedUser.bio,
+    phone: updatedUser.phone,
   });
 });
+
+exports.forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    const resetToken = user.createPasswordResetToken();
+    await user.save();
+
+    try {
+      const resetUrl = `${req.protocol}://${req.get(
+        'host'
+      )}/api/users/reset-password/${resetToken}`;
+      await new Email(user, resetUrl).sendPasswordReset();
+
+      res.status(200).json({
+        status: 'Success',
+        message: 'Password reset url has been sent to your email',
+      });
+    } catch (error) {
+      user.passwordResetToken = undefined;
+      user.passwordResetTokenExpires = undefined;
+      await user.save();
+
+      res.status(500);
+      throw new Error('There was an error sending mail. Try again later!');
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    const { token } = req.params;
+    const { password, passwordConfirm } = req.body;
+
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetTokenExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      res.status(400);
+      throw new Error('Token is invalid or expired');
+    }
+
+    user.password = password;
+    user.passwordConfirm = passwordConfirm;
+    user.passwordResetToken = undefined;
+    user.passwordResetTokenExpires = undefined;
+
+    await user.save();
+
+    res.status(200).json({
+      status: 'Success',
+      message: 'Password reset successfull.',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// exports.otpRequest = async (req, res, next) => {
+//   const { phone } = req.body;
+
+//   try {
+//     const user = await User.findOne({ phone });
+
+//     if (!user) {
+//       res.status(404);
+//       throw new Error('User not found');
+//     }
+
+//     const result = await generateAndStoreOtp(user);
+
+//     if (result.success) {
+//       res.status(200).json({ message: 'OTP sent successfully.' });
+//     } else {
+//       res.status(400);
+//       throw new Error(result.message);
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// };
