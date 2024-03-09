@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
@@ -20,8 +21,8 @@ const userSchema = new mongoose.Schema({
     maxLength: 200,
   },
   photo: {
-    type: String,
-    default: 'default.jpg',
+    imageUrl: String,
+    public_id: String,
   },
   role: {
     type: String,
@@ -43,11 +44,19 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords are not the same!',
     },
   },
+  phone: {
+    type: Number,
+  },
+  otp: String,
+  otpCreatedAt: Date,
   active: {
     type: Boolean,
     default: true,
     select: false,
   },
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetTokenExpires: Date,
 });
 
 userSchema.pre('save', async function (next) {
@@ -64,11 +73,34 @@ userSchema.pre('save', async function (next) {
   }
 });
 
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(20).toString('hex');
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  this.passwordResetTokenExpires = Date.now() + 10 * 60 * 1000;
+  console.log(this.passwordResetTokenExpires.toLocaleString());
+  console.log(
+    'resetToken:' + resetToken + ',hashedToken: ' + this.passwordResetToken
+  );
+  return resetToken;
 };
 
 const User = mongoose.model('User', userSchema);
