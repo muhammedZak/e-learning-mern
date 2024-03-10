@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const userRouter = require('./routes/user-routes');
 const courseRouter = require('./routes/course-routes');
 const moduleRouter = require('./routes/module-routes');
+const lessonRouter = require('./routes/lesson-routes');
 const imageUploader = require('./routes/file-uploader');
 const { notFound, errorHandler } = require('./middlewares/error-middleware');
 
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 app.use('/api/users', userRouter);
 app.use('/api/course', courseRouter);
 app.use('/api/module', moduleRouter);
+app.use('/api/lessons', lessonRouter);
 app.use('/api/upload', imageUploader);
 
 app.use(notFound);

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user-model');
 const catchAsync = require('../utils/catch-async');
 const Course = require('../models/course-modal');
+const Module = require('../models/module-model');
 
 const protect = catchAsync(async (req, res, next) => {
   console.log('protect--------->>>');
@@ -47,18 +48,11 @@ const isTutor = (req, res, next) => {
 };
 
 const isCourseByTutor = async (req, res, next) => {
-  console.log('courseBy/tutor--------->>>');
   try {
     const isInstructor = await Course.find({
       instructor: req.user._id,
       _id: req.params.courseId,
     });
-
-    console.log('params:', req.params);
-    console.log('moduleId:', req.params.id);
-    console.log('courseId:', req.params.courseId);
-    console.log('userId:', req.user._id);
-    console.log('isInstructor:', isInstructor);
 
     if (isInstructor && isInstructor.length > 0) {
       next();
@@ -73,4 +67,27 @@ const isCourseByTutor = async (req, res, next) => {
   }
 };
 
-module.exports = { isAdmin, protect, isTutor, isCourseByTutor };
+const isLessonByModule = async (req, res, next) => {
+  const { moduleId } = req.params;
+
+  try {
+    const module = await Module.findById(moduleId).populate('course');
+
+    if (req.user._id.equals(module.course.instructor)) {
+      next();
+    } else {
+      res.status(400);
+      throw new Error('This module is not belongs to you.');
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  isAdmin,
+  protect,
+  isTutor,
+  isCourseByTutor,
+  isLessonByModule,
+};

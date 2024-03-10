@@ -50,7 +50,7 @@ exports.getModules = async (req, res, next) => {
       .populate('course')
       .sort({ module_order: 1 });
 
-    res.status(201).json({
+    res.status(200).json({
       results: modules.length,
       status: 'success',
       modules,
