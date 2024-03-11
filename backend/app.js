@@ -7,6 +7,7 @@ const userRouter = require('./routes/user-routes');
 const courseRouter = require('./routes/course-routes');
 const moduleRouter = require('./routes/module-routes');
 const lessonRouter = require('./routes/lesson-routes');
+const categoryRouter = require('./routes/category-routes');
 const imageUploader = require('./routes/file-uploader');
 const { notFound, errorHandler } = require('./middlewares/error-middleware');
 
@@ -30,6 +31,7 @@ app.use('/api/users', userRouter);
 app.use('/api/course', courseRouter);
 app.use('/api/module', moduleRouter);
 app.use('/api/lessons', lessonRouter);
+app.use('/api/categories', categoryRouter);
 app.use('/api/upload', imageUploader);
 
 app.use(notFound);

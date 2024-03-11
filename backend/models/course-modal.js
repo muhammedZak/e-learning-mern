@@ -14,6 +14,16 @@ const courseSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Instructor is required'],
   },
+  category: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Category',
+    required: [true, 'Category is required for the course'],
+  },
+  subcategory: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Category.subcategories',
+    required: [true, 'Subcategory is required for the course'],
+  },
   description: {
     type: String,
     required: [true, 'Description is required for the course'],
