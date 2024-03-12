@@ -6,12 +6,14 @@ const {
   getCourse,
   editCourse,
   deleteCourse,
+  popularTopics,
 } = require('../controllers/course-controller');
 
 const { protect, isTutor, isAdmin } = require('../middlewares/auth-middleware');
 
 const router = express.Router();
 
+router.get('/popular-topics', popularTopics);
 router.route('/').post(protect, isTutor, createCourse).get(getCourses);
 
 router

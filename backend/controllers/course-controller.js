@@ -16,8 +16,43 @@ exports.createCourse = async (req, res, next) => {
 
 exports.getCourses = async (req, res, next) => {
   try {
-    const courses = await Course.find();
-    res.status(201).json({
+    const queryObj = { ...req.query };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+
+    let query = Course.find(JSON.parse(queryStr));
+
+    if (req.query.sort) {
+      query = query.sort(req.query.sort);
+    } else {
+      query = query.sort('-createdAt');
+    }
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else {
+      query = query.select('-__v');
+    }
+
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 10;
+    const skip = (page - 1) * limit;
+
+    query.skip(skip).limit(limit);
+
+    if (req.query.page) {
+      const numCourses = await Course.countDocuments();
+      if (skip >= numCourses) throw new Error('This page does not exist!.');
+    }
+
+    const courses = await query;
+
+    res.status(200).json({
+      results: courses.length,
       status: 'Success',
       courses,
     });
@@ -76,6 +111,38 @@ exports.deleteCourse = async (req, res, next) => {
     res.status(201).json({
       status: 'Success',
       course,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.popularTopics = async (req, res, next) => {
+  try {
+    const popularTopics = await Course.aggregate([
+      {
+        $group: {
+          _id: '$topic',
+          totalCourses: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { totalCourses: -1 },
+      },
+      {
+        $limit: 5,
+      },
+      {
+        $project: {
+          topic: '$_id',
+          totalCourses: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      popularTopics,
     });
   } catch (error) {
     next(error);

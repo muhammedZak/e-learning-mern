@@ -6,7 +6,7 @@ const courseSchema = new mongoose.Schema({
     required: [true, 'A course name is required'],
     unique: true,
     trim: true,
-    maxLength: [40, 'Course name cannot exceed more than 40 charecters'],
+    maxLength: [100, 'Course name cannot exceed more than 40 charecters'],
     minLength: [10, 'Course name cannot be less than 10 charecters'],
   },
   instructor: {
@@ -24,6 +24,7 @@ const courseSchema = new mongoose.Schema({
     ref: 'Category.subcategories',
     required: [true, 'Subcategory is required for the course'],
   },
+  topic: String,
   description: {
     type: String,
     required: [true, 'Description is required for the course'],
