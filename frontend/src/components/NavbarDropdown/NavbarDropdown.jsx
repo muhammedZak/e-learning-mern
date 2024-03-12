@@ -1,51 +1,74 @@
 import React, { useEffect, useState } from 'react';
-import ListItems from '../ListItems/ListItems';
-
-const items = [
-  { id: 0, icon: true, text: 'Development' },
-  { id: 1, icon: true, text: 'Bussiness' },
-  { id: 2, icon: true, text: 'Finance & Accounting' },
-  { id: 3, icon: true, text: 'IT & Software' },
-  { id: 4, icon: true, text: 'Office Productivity' },
-  { id: 5, icon: true, text: 'Design' },
-  { id: 6, icon: true, text: 'Marketing' },
-  { id: 7, icon: true, text: 'Lifestyle' },
-];
-
-const content = [
-  { id: 0, text: 'Web Development' },
-  { id: 1, text: 'Mobile Development' },
-  { id: 2, text: 'Data Science' },
-  { id: 3, text: 'Database Design & Development' },
-  { id: 4, text: 'Game Development' },
-  { id: 5, text: 'Software Testing' },
-  { id: 6, text: 'Programming Languages' },
-  { id: 7, text: 'No-Code Development' },
-];
+import Skeleton from '@mui/material/Skeleton';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useFetchAllCategoriesQuery } from '../../store/apis/categoryApi';
+import { Link } from 'react-router-dom';
 
 const NavbarDropdown = ({ show }) => {
   const [openDropRight, setOpenDropRight] = useState(false);
+  const [subcategory, setSubcategory] = useState([]);
 
   useEffect(() => {
     setOpenDropRight(false);
   }, [show]);
 
-  const onListItemMouseEnter = () => {
+  function findCategory(id) {
+    return data.categories.find((category) => category._id === id);
+  }
+
+  const onListItemMouseEnter = (id) => {
+    const category = findCategory(id);
+    setSubcategory(category ? category.subcategories : []);
     setOpenDropRight(true);
   };
 
+  const { data, isLoading } = useFetchAllCategoriesQuery();
+
   return (
     <div className={` ${show ? 'absolute' : 'hidden'} flex gap-1 z-50`}>
-      <div className="w-72 bg-slate-100 mt-8">
-        <ListItems items={items} onMouseEnter={onListItemMouseEnter} />
+      <div className="w-64 bg-slate-100 mt-6">
+        <ul>
+          {isLoading
+            ? Array(5).map((item) => (
+                <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+              ))
+            : data.categories.map((item) => (
+                <Link
+                  to={`/courses/${item.name}`}
+                  key={item._id}
+                  onMouseEnter={() => onListItemMouseEnter(item._id)}
+                  className="pl-2 py-2 pr-1 text-sm hover:bg-slate-200 flex justify-between cursor-pointer"
+                >
+                  <span href="#">{item.name}</span>
+                  <ChevronRightIcon fontSize="small" />
+                </Link>
+              ))}
+        </ul>
       </div>
-      <div
-        className={`w-72  bg-slate-100 mt-8 ${
-          openDropRight ? 'block' : 'hidden'
-        }`}
-      >
-        <ListItems items={content} isLink={1} />
-      </div>
+      {subcategory.length && (
+        <div
+          className={`w-64  bg-slate-100 mt-6 ${
+            openDropRight ? 'block' : 'hidden'
+          }`}
+        >
+          <ul>
+            {isLoading
+              ? Array(5).map((item) => (
+                  <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                ))
+              : subcategory &&
+                subcategory.map((item) => (
+                  <Link
+                    to={`/courses/${item.name}`}
+                    key={item._id}
+                    className="pl-2 py-2 pr-1 text-sm hover:bg-slate-200 flex justify-between cursor-pointer"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

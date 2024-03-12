@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useScreenSize from '../../customHooks/useScreenSize';
 import CategoryList from './CategoryList';
 
-const CategoryLists = () => {
+const CategoryLists = ({ data, isLoading }) => {
   const [isMobile, setIsMobile] = useState(false);
   const { width: screenWidth } = useScreenSize();
 
@@ -17,7 +17,7 @@ const CategoryLists = () => {
           : undefined
       }
     >
-      <CategoryList isMobile={isMobile} />
+      <CategoryList isMobile={isMobile} data={data} isLoading={isLoading} />
     </div>
   );
 };

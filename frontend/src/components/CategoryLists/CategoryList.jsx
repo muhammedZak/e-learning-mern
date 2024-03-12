@@ -2,8 +2,9 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import { NextBtn, PreviousBtn } from '../Slider/MainSlider/MainSlider';
+import { Skeleton } from '@mui/material';
 
-const OnMobile = () => {
+const OnMobile = ({ data, isLoading }) => {
   const settings = {
     className: 'slider variable-width',
     infinite: true,
@@ -31,11 +32,15 @@ const OnMobile = () => {
   );
 };
 
-const CategoryList = ({ isMobile }) => {
+const CategoryList = ({ isMobile, data, isLoading }) => {
   return (
     <>
       {isMobile ? (
-        <OnMobile />
+        <OnMobile data={data} isLoading={isLoading} />
+      ) : isLoading ? (
+        Array(5).map((_, index) => {
+          <Skeleton key={index} />;
+        })
       ) : (
         ['React', 'Web Development', 'Javascript', 'Amazon AWS'].map(
           (item, index) => (

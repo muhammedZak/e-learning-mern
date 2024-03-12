@@ -8,10 +8,10 @@ const ListItems = ({ items, onClick, isLink, onMouseEnter }) => {
     content = items.map((item) => (
       <li
         onClick={onClick}
-        key={item.id}
+        key={item._id}
         className="pl-5 py-3 pr-1  hover:bg-slate-200  cursor-pointer"
       >
-        <span className="font-medium">{item.text}</span>
+        <span className="font-medium">{item.name}</span>
       </li>
     ));
   } else {
@@ -19,11 +19,11 @@ const ListItems = ({ items, onClick, isLink, onMouseEnter }) => {
       <li
         onMouseEnter={onMouseEnter}
         onClick={onClick}
-        key={item.id}
+        key={item._id}
         className="pl-5 py-3 pr-1 hover:bg-slate-200 flex justify-between cursor-pointer"
       >
         <span className="font-medium" href="#">
-          {item.text}
+          {item.name}
         </span>
         <ChevronRightIcon />
       </li>

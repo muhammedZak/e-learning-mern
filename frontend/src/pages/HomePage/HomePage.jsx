@@ -5,8 +5,11 @@ import CategoryLists from '../../components/CategoryLists/CategoryLists';
 import CourseListContainer from '../../components/CourseListContainer/CourseListContainer';
 import InstructorSection from '../../components/InstructorSection/InstructorSection';
 import Testimonial from '../../components/Testimonial/Testimonial';
+import { usePopularTopicsQuery } from '../../store/apis/courseApi';
 
 const HomePage = () => {
+  const { data, isLoading } = usePopularTopicsQuery();
+
   return (
     <>
       <MainSlider />
@@ -21,7 +24,7 @@ const HomePage = () => {
           </p>
 
           <div className="py-5">
-            <CategoryLists />
+            <CategoryLists data={data} isLoading={isLoading} />
             <CourseListContainer />
           </div>
         </Container>

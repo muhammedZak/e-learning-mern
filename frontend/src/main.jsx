@@ -28,6 +28,7 @@ import PaymentMethods from './pages/Account/PaymentMethods.jsx';
 import Notifications from './pages/Account/Notifications.jsx';
 import Messages from './pages/Account/Messages.jsx';
 import CloseAccount from './pages/Account/CloseAccount.jsx';
+import CourseList from './pages/CourseListPage/CourseList.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/courses/:category" element={<CourseList />} />
       {/* private routes */}
       <Route path="" element={<PrivateRoute />}>
         <Route path="/account-settings" element={<AccountSettingsPage />} />
