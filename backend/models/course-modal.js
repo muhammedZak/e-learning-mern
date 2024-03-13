@@ -72,6 +72,7 @@ const courseSchema = new mongoose.Schema({
       message: 'Discount price ({VALUE}) should be below regular price',
     },
   },
+  images: String,
   photo: {
     imageUrl: String,
     public_id: String,
