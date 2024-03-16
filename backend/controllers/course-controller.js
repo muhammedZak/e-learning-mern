@@ -14,16 +14,72 @@ exports.createCourse = async (req, res, next) => {
   }
 };
 
+exports.filtering = async (req, res, next) => {
+  try {
+    const course = await Course.find({
+      category: '65ef1d01dfe1980def4d0c79',
+      $or: [
+        { duration: { $gte: 600, $lte: 700 } },
+        { duration: { $gte: 800, $lte: 900 } },
+      ],
+    });
+    res.json({ rs: course.length, course });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getCourses = async (req, res, next) => {
   try {
     const queryObj = { ...req.query };
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    let queryStr = JSON.stringify(queryObj);
-    console.log(queryStr);
+    let queryStr;
+
+    if (
+      queryObj.price &&
+      (Array.isArray(queryObj.price.gte) || Array.isArray(queryObj.price.lte))
+    ) {
+      const { gte, lte } = queryObj.price;
+      const orArray = [];
+
+      for (let i = 0; i < gte.length; i++) {
+        orArray.push({
+          price: {
+            gte: parseInt(gte[i]),
+            lte: parseInt(lte[i]),
+          },
+        });
+      }
+
+      queryObj.$or = orArray;
+      delete queryObj.price;
+    }
+
+    if (
+      queryObj.duration &&
+      (Array.isArray(queryObj.duration.gte) ||
+        Array.isArray(queryObj.duration.lte))
+    ) {
+      const { gte, lte } = queryObj.duration;
+      const orArray = [];
+
+      for (let i = 0; i < gte.length; i++) {
+        orArray.push({
+          duration: {
+            gte: parseInt(gte[i]),
+            lte: parseInt(lte[i]),
+          },
+        });
+      }
+
+      queryObj.$or = orArray;
+      delete queryObj.duration;
+    }
+
+    queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    console.log(queryStr);
 
     let query = Course.find(JSON.parse(queryStr)).populate('instructor');
     const count = await Course.countDocuments(JSON.parse(queryStr));

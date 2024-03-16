@@ -7,12 +7,14 @@ const {
   editCourse,
   deleteCourse,
   popularTopics,
+  filtering,
 } = require('../controllers/course-controller');
 
 const { protect, isTutor, isAdmin } = require('../middlewares/auth-middleware');
 
 const router = express.Router();
 
+router.get('/filters', filtering);
 router.get('/popular-topics', popularTopics);
 router.route('/').post(protect, isTutor, createCourse).get(getCourses);
 
