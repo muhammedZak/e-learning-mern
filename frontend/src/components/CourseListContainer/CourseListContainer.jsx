@@ -1,15 +1,18 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import { Skeleton } from '@mui/material';
 import { NextBtn, PreviousBtn } from '../Slider/MainSlider/MainSlider';
 import Card from '../Card/Card';
 
-const CourseListContainer = () => {
+const CourseListContainer = ({ courseData, courseLoading }) => {
   const settings = {
-    infinite: true,
+    // className: 'slider variable-width',
+    infinite: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
+    // variableWidth: true,
     prevArrow: <PreviousBtn className="courseList" />,
     nextArrow: <NextBtn className="courseList" />,
     responsive: [
@@ -46,21 +49,26 @@ const CourseListContainer = () => {
   return (
     <div className="courseList  pt-5">
       <Slider {...settings} className="px-6">
-        <div>
-          <Card />
-        </div>
-        <div>
-          <Card />
-        </div>
-        <div>
-          <Card />
-        </div>
-        <div>
-          <Card />
-        </div>
-        <div>
-          <Card />
-        </div>
+        {(courseLoading ? Array.from(new Array(5)) : courseData.courses).map(
+          (course, index) =>
+            course ? (
+              <div key={course._id}>
+                <Card course={course} />
+              </div>
+            ) : (
+              <>
+                <div key={index}>
+                  <Skeleton variant="rectangular" width={210} height={118} />
+                </div>
+                <div>
+                  <Skeleton />
+                </div>
+                <div>
+                  <Skeleton width="60%" />
+                </div>
+              </>
+            )
+        )}
       </Slider>
     </div>
   );

@@ -16,10 +16,17 @@ const courseApi = createApi({
           };
         },
       }),
+      fetchCourses: builder.query({
+        query: (query) => ({
+          url: '/api/course',
+          method: 'GET',
+          params: query,
+        }),
+      }),
     };
   },
 });
 
-export const { usePopularTopicsQuery } = courseApi;
+export const { usePopularTopicsQuery, useFetchCoursesQuery } = courseApi;
 
 export { courseApi };

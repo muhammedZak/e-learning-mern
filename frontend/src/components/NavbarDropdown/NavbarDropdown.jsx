@@ -34,7 +34,7 @@ const NavbarDropdown = ({ show }) => {
               ))
             : data.categories.map((item) => (
                 <Link
-                  to={`/courses/${item.name}`}
+                  to={`/courses/${item.name}?category=${item._id}`}
                   key={item._id}
                   onMouseEnter={() => onListItemMouseEnter(item._id)}
                   className="pl-2 py-2 pr-1 text-sm hover:bg-slate-200 flex justify-between cursor-pointer"
@@ -59,7 +59,7 @@ const NavbarDropdown = ({ show }) => {
               : subcategory &&
                 subcategory.map((item) => (
                   <Link
-                    to={`/courses/${item.name}`}
+                    to={`/courses/${item.name}?subcategory=${item._id}`}
                     key={item._id}
                     className="pl-2 py-2 pr-1 text-sm hover:bg-slate-200 flex justify-between cursor-pointer"
                   >

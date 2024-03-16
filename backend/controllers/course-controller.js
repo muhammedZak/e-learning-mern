@@ -21,14 +21,17 @@ exports.getCourses = async (req, res, next) => {
     excludedFields.forEach((el) => delete queryObj[el]);
 
     let queryStr = JSON.stringify(queryObj);
+    console.log(queryStr);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    console.log(queryStr);
 
-    let query = Course.find(JSON.parse(queryStr));
+    let query = Course.find(JSON.parse(queryStr)).populate('instructor');
+    const count = await Course.countDocuments(JSON.parse(queryStr));
 
     if (req.query.sort) {
       query = query.sort(req.query.sort);
     } else {
-      query = query.sort('-createdAt');
+      query = query.sort('-ratingsAverage');
     }
 
     if (req.query.fields) {
@@ -54,6 +57,9 @@ exports.getCourses = async (req, res, next) => {
     res.status(200).json({
       results: courses.length,
       status: 'Success',
+      page,
+      count,
+      pages: Math.ceil(count / limit),
       courses,
     });
   } catch (error) {

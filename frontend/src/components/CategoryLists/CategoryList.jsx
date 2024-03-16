@@ -4,10 +4,10 @@ import Slider from 'react-slick';
 import { NextBtn, PreviousBtn } from '../Slider/MainSlider/MainSlider';
 import { Skeleton } from '@mui/material';
 
-const OnMobile = ({ data, isLoading }) => {
+const OnMobile = ({ data, isLoading, onTopicClick }) => {
   const settings = {
     className: 'slider variable-width',
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -18,41 +18,50 @@ const OnMobile = ({ data, isLoading }) => {
   return (
     <div className="category">
       <Slider {...settings} className="px-3 category-slider-mobile">
-        {['React', 'Web Development', 'Javascript', 'Amazon AWS'].map(
-          (item, index) => (
-            <div key={index} className="mx-3 ">
-              <button className="text-lg text-slate-900 font-medium">
-                {item}
-              </button>
-            </div>
-          )
+        {(isLoading ? Array.from(new Array(5)) : data.popularTopics).map(
+          (item, index) =>
+            item ? (
+              <div key={index} className="mx-3 ">
+                <button
+                  onClick={() => onTopicClick({ topic: item.topic })}
+                  className="text-lg text-slate-900 font-medium"
+                >
+                  {item.topic}
+                </button>
+              </div>
+            ) : (
+              <Skeleton
+                key={index}
+                variant="rectangular"
+                width={150}
+                height={30}
+              />
+            )
         )}
       </Slider>
     </div>
   );
 };
 
-const CategoryList = ({ isMobile, data, isLoading }) => {
-  return (
-    <>
-      {isMobile ? (
-        <OnMobile data={data} isLoading={isLoading} />
-      ) : isLoading ? (
-        Array(5).map((_, index) => {
-          <Skeleton key={index} />;
-        })
-      ) : (
-        ['React', 'Web Development', 'Javascript', 'Amazon AWS'].map(
-          (item, index) => (
-            <div key={index} className="shrink-0	">
-              <button className="text-lg text-slate-900 font-medium">
-                {item}
-              </button>
-            </div>
-          )
+const CategoryList = ({ isMobile, data, isLoading, onTopicClick }) => {
+  return isMobile ? (
+    <OnMobile data={data} isLoading={isLoading} onTopicClick={onTopicClick} />
+  ) : (
+    (isLoading ? Array.from(new Array(5)) : data.popularTopics).map(
+      (item, index) =>
+        item ? (
+          <div key={index} className="shrink-0">
+            <button
+              onClick={() => onTopicClick({ topic: item.topic })}
+              className="text-lg text-slate-900 font-medium"
+            >
+              {item.topic}
+            </button>
+          </div>
+        ) : (
+          <Skeleton key={index} variant="rectangular" width={210} height={30} />
         )
-      )}
-    </>
+    )
   );
 };
 
