@@ -13,3 +13,11 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
