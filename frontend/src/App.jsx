@@ -1,22 +1,18 @@
-import { Outlet } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/Footer';
-import Container from './components/Layouts/Container';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import RootLayout from './pages/RootLayout';
+import HomePage from './pages/HomePage';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />,
+    children: [{ index: true, element: <HomePage /> }],
+  },
+]);
 
 function App() {
-  return (
-    <>
-      <header className="sticky top-0 z-50">
-        <Navbar />
-      </header>
-      <main>
-        <Outlet />
-      </main>
-      <footer>
-        <Footer />
-      </footer>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
